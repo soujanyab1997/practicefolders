@@ -1,0 +1,59 @@
+package sumofdistinct;
+
+public class Stockprofit {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+int stock[]= {100, 90, 80, 70, 60, 30, 20};
+
+
+
+
+
+int len=stock.length;
+int min=stock[0],max=stock[0];
+int profit=0;
+for(int i=1;i<len;i++) {
+	if(stock[i]<min) {
+		min=stock[i];
+		
+		break;
+			}
+	}
+int temp=max;
+int second=0;
+for(int j=0;j<len;j++) {	
+	if(stock[j]>max) {
+		max=stock[j];
+	}
+	if(stock[j]==min) {
+		break;
+	}
+		}
+	for(int j=0;j<len;j++) {
+	if(stock[j]==min) {
+		for(int k=j;k<len;k++) {
+			if(stock[k]>min)
+		second=stock[k];
+	}
+	}
+	}
+
+
+int seconddiff=(second-min);
+int firstdiff=(max-temp);
+if(seconddiff>0 && firstdiff>0)
+profit=profit+(max-temp)+(second-min);
+else if(seconddiff<0)
+	profit=profit+(max-temp);
+else  {
+	profit=profit+(second-min);
+}
+if(profit>0)
+System.out.println("profit earned"+profit);
+else {
+	System.out.println("no profit earned");
+}
+	}
+
+}
