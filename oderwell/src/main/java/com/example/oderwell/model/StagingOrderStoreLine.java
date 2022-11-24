@@ -2,6 +2,8 @@ package com.example.oderwell.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,13 +13,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class StagingOrderStoreLine {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int uplOrderlineNum;
-	private String uplorderid;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+//	private int uplOrderlineNum;
+	
+	@EmbeddedId
+	private stageStoreOrderLineKey id;
+	//private String uplorderid;
 	private String groupid;
 	private int groupseqnbr;
 	private int purchaseCompanyId;
@@ -36,26 +43,21 @@ public class StagingOrderStoreLine {
 	private Date lastChangeTimeStamp;
 	private String lastChangeUserId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-
+	@ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.ALL)
+    @JoinColumn(name = "uplorderid")
+	@JsonIgnore
 	private StagingStoreOrder stagingStoreOrder;
-	
+
 	public StagingOrderStoreLine() {
 		super();
 	}
 
-
-
-
-	public StagingOrderStoreLine(int uplOrderlineNum, String uplorderid, String groupid, int groupseqnbr,
-			int purchaseCompanyId, String actionCode, String poNum, String poLinenum, int itemNum, int orderQty,
-			String orderQtyUOM, int msgNum, int orderStatusCode, int didNum, String deptNum, Date createTimeStamp,
-			String createdUserId, Date lastChangeTimeStamp, String lastChangeUserId,
-			StagingStoreOrder stagingStoreOrder) {
+	public StagingOrderStoreLine(stageStoreOrderLineKey id, String groupid, int groupseqnbr, int purchaseCompanyId,
+			String actionCode, String poNum, String poLinenum, int itemNum, int orderQty, String orderQtyUOM,
+			int msgNum, int orderStatusCode, int didNum, String deptNum, Date createTimeStamp, String createdUserId,
+			Date lastChangeTimeStamp, String lastChangeUserId, StagingStoreOrder stagingStoreOrder) {
 		super();
-		this.uplOrderlineNum = uplOrderlineNum;
-		this.uplorderid = uplorderid;
+		this.id = id;
 		this.groupid = groupid;
 		this.groupseqnbr = groupseqnbr;
 		this.purchaseCompanyId = purchaseCompanyId;
@@ -76,8 +78,13 @@ public class StagingOrderStoreLine {
 		this.stagingStoreOrder = stagingStoreOrder;
 	}
 
+	public stageStoreOrderLineKey getId() {
+		return id;
+	}
 
-
+	public void setId(stageStoreOrderLineKey id) {
+		this.id = id;
+	}
 
 	public String getGroupid() {
 		return groupid;
@@ -110,7 +117,6 @@ public class StagingOrderStoreLine {
 	public void setActionCode(String actionCode) {
 		this.actionCode = actionCode;
 	}
-
 
 	public String getPoNum() {
 		return poNum;
@@ -216,24 +222,6 @@ public class StagingOrderStoreLine {
 		this.lastChangeUserId = lastChangeUserId;
 	}
 
-
-
-	public int getUplOrderlineNum() {
-		return uplOrderlineNum;
-	}
-
-	public void setUplOrderlineNum(int uplOrderlineNum) {
-		this.uplOrderlineNum = uplOrderlineNum;
-	}
-
-	public String getUplorderid() {
-		return uplorderid;
-	}
-
-	public void setUplorderid(String uplorderid) {
-		this.uplorderid = uplorderid;
-	}
-
 	public StagingStoreOrder getStagingStoreOrder() {
 		return stagingStoreOrder;
 	}
@@ -242,5 +230,16 @@ public class StagingOrderStoreLine {
 		this.stagingStoreOrder = stagingStoreOrder;
 	}
 
+	@Override
+	public String toString() {
+		return "StagingOrderStoreLine [id=" + id + ", groupid=" + groupid + ", groupseqnbr=" + groupseqnbr
+				+ ", purchaseCompanyId=" + purchaseCompanyId + ", actionCode=" + actionCode + ", poNum=" + poNum
+				+ ", poLinenum=" + poLinenum + ", itemNum=" + itemNum + ", orderQty=" + orderQty + ", orderQtyUOM="
+				+ orderQtyUOM + ", msgNum=" + msgNum + ", orderStatusCode=" + orderStatusCode + ", didNum=" + didNum
+				+ ", deptNum=" + deptNum + ", createTimeStamp=" + createTimeStamp + ", createdUserId=" + createdUserId
+				+ ", lastChangeTimeStamp=" + lastChangeTimeStamp + ", lastChangeUserId=" + lastChangeUserId
+				+ ", stagingStoreOrder=" + stagingStoreOrder + "]";
+	}
 
+	
 }

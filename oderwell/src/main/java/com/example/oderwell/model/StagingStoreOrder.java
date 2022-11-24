@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class StagingStoreOrder {
 	
@@ -26,8 +29,7 @@ public class StagingStoreOrder {
 	private int srcfacilitynbr;
 	private String srcfacilitycountrycode;
 	private Date srcrderCreationTimestamp; 
-	private String destinationCountryCode;
-	
+	private String destinationCountryCode;	
 	private int warehouseOrderNumber;
 	private String destfacilityCountryCode;
 	private int orderRecordTypeCode;
@@ -37,13 +39,16 @@ public class StagingStoreOrder {
 	private String craeteUserId;
 	private Date lastchangedTimestamp;
 	private String lastChangedUserId;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date orderDownloadDate;
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "stagingStoreOrder",fetch = FetchType.LAZY)
-	private List<StagingOrderStoreLine> StagingOrderStoreLine = new ArrayList<>();
+	//@OneToMany(cascade = CascadeType.ALL,mappedBy = "StagingStoreOrder",fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "stagingStoreOrder")
+	@JsonIgnore
+	private List<StagingOrderStoreLine> StagingOrderStoreLine;
+	
 	public StagingStoreOrder() {
 		super();
 	}
-	
 	public StagingStoreOrder(String uplorderid, String groupid, int groupseqnbr, int facilitynbr,
 			String facilitycntrycode, int srcfacilitynbr, String srcfacilitycountrycode, Date srcrderCreationTimestamp,
 			String destinationCountryCode, int warehouseOrderNumber, String destfacilityCountryCode,
@@ -72,7 +77,6 @@ public class StagingStoreOrder {
 		this.orderDownloadDate = orderDownloadDate;
 		StagingOrderStoreLine = stagingOrderStoreLine;
 	}
-
 	public String getUplorderid() {
 		return uplorderid;
 	}
@@ -187,23 +191,27 @@ public class StagingStoreOrder {
 	public void setOrderDownloadDate(Date orderDownloadDate) {
 		this.orderDownloadDate = orderDownloadDate;
 	}
-
 	public List<StagingOrderStoreLine> getStagingOrderStoreLine() {
 		return StagingOrderStoreLine;
 	}
-
-	public void setStagingOrderStoreLine(List<StagingOrderStoreLine> stagingOrderStoreLineparam) {
-		System.out.println("setter of setStagingOrderStoreLine ");
-		//StagingOrderStoreLine = stagingOrderStoreLine;
-		System.out.println(stagingOrderStoreLineparam.size());
-		System.out.println("stagingOrderStoreLine .... "+stagingOrderStoreLineparam);
-	//	this.StagingOrderStoreLine.add(stagingOrderStoreLine);
-		 for (StagingOrderStoreLine stl: stagingOrderStoreLineparam) {
-			 System.out.println( "setter stl"+stl);
-		    //  stl.setStagingStoreOrder(this);
-		      StagingOrderStoreLine.add(stl);
-		    }
+	public void setStagingOrderStoreLine(List<StagingOrderStoreLine> stagingOrderStoreLine) {
+		StagingOrderStoreLine = stagingOrderStoreLine;
 	}
+	@Override
+	public String toString() {
+		return "StagingStoreOrder [uplorderid=" + uplorderid + ", groupid=" + groupid + ", groupseqnbr=" + groupseqnbr
+				+ ", facilitynbr=" + facilitynbr + ", facilitycntrycode=" + facilitycntrycode + ", srcfacilitynbr="
+				+ srcfacilitynbr + ", srcfacilitycountrycode=" + srcfacilitycountrycode + ", srcrderCreationTimestamp="
+				+ srcrderCreationTimestamp + ", destinationCountryCode=" + destinationCountryCode
+				+ ", warehouseOrderNumber=" + warehouseOrderNumber + ", destfacilityCountryCode="
+				+ destfacilityCountryCode + ", orderRecordTypeCode=" + orderRecordTypeCode + ", orderStatuscode="
+				+ orderStatuscode + ", status=" + status + ", createTimeStamp=" + createTimeStamp + ", craeteUserId="
+				+ craeteUserId + ", lastchangedTimestamp=" + lastchangedTimestamp + ", lastChangedUserId="
+				+ lastChangedUserId + ", orderDownloadDate=" + orderDownloadDate + ", StagingOrderStoreLine="
+				+ StagingOrderStoreLine + "]";
+	}
+	
+
 	
 	
 }

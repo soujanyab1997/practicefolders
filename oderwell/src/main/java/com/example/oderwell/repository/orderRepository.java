@@ -1,5 +1,6 @@
 package com.example.oderwell.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,10 @@ import com.example.oderwell.model.StagingStoreOrder;
 public interface orderRepository extends JpaRepository<StagingStoreOrder, String>{
 
 	//List<StagingStoreOrder> findByuplorderid();
-	@Query("SELECT u FROM StagingStoreOrder u WHERE u.uplorderid = 1")
-	List<StagingStoreOrder> findByuplorderid();
+//	@Query("SELECT u FROM StagingStoreOrder u WHERE u.uplorderid = 1")
+//	List<StagingStoreOrder> findByuplorderid();
 
+	public List<StagingStoreOrder> findByOrderDownloadDate(Date orderDate);
+
+	List<StagingStoreOrder> findByuplorderid(String uplorderid);
 }

@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class stageStoreOrderLineKey implements Serializable {
 
-	private String uplorderid;
+	//private String uplorderid;
 	private int uplOrderlineNum;
 	
 	public stageStoreOrderLineKey() {
@@ -16,17 +16,17 @@ public class stageStoreOrderLineKey implements Serializable {
 
 	public stageStoreOrderLineKey(String uplorderid, int uplOrderlineNum) {
 		super();
-		this.uplorderid = uplorderid;
+		//this.uplorderid = uplorderid;
 		this.uplOrderlineNum = uplOrderlineNum;
 	}
 
-	public String getUplorderid() {
-		return uplorderid;
-	}
-
-	public void setUplorderid(String uplorderid) {
-		this.uplorderid = uplorderid;
-	}
+//	public String getUplorderid() {
+//		return uplorderid;
+//	}
+//
+//	public void setUplorderid(String uplorderid) {
+//		this.uplorderid = uplorderid;
+//	}
 
 	public int getUplOrderlineNum() {
 		return uplOrderlineNum;
