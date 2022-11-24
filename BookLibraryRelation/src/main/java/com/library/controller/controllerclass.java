@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,18 +48,33 @@ public class controllerclass {
 		System.out.println(libraryrepo.findById(101));
 		return libraryrepo.findAll();
 	}
+//	@GetMapping("/book")
+//	public List<book> getbooksByTime(@RequestParam(name = "bookDate") String book_date) throws ParseException{
+//		System.out.println("book_date ... "+book_date);
+//				  SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+//		  Date newbookdate=formatter1.parse(book_date);
+//		  
+//		System.out.println("newbookdate .. "+newbookdate);
+//		List<book> books= bookrepo.findByBookdate(newbookdate);
+//		System.out.println("after date... "+books);
+//		//2003-11-21T01:11:11Z
+//		return books;
+//		
+//	}
 	
 	@GetMapping("/book")
-	public List<book> getbooksByTime(@RequestParam(name = "bookDate") String book_date) throws ParseException{
+	public List<book> getbooksByTime(@RequestParam(name = "bookDate") 	@DateTimeFormat(pattern="yyyy-MM-dd") Date book_date) throws ParseException{
 		System.out.println("book_date ... "+book_date);
-				  SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-		  Date newbookdate=formatter1.parse(book_date);
-		  
+//				  SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+//		  Date newbookdate=formatter1.parse(book_date);
+		  Date newbookdate= book_date;
 		System.out.println("newbookdate .. "+newbookdate);
+		System.out.println("all boooks... "+ bookrepo.findAll());
 		List<book> books= bookrepo.findByBookdate(newbookdate);
 		System.out.println("after date... "+books);
 		//2003-11-21T01:11:11Z
 		return books;
 		
 	}
+
 }

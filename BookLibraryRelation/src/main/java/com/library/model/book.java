@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -21,6 +22,7 @@ public class book {
 	private int bookId;
 	private String bookName;
 	private String author;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date bookdate;
 	@ManyToOne
 	(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.ALL)
